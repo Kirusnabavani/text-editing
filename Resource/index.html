@@ -23,7 +23,7 @@
             background-color: black;
             color: white;
             border: 20px;
-            padding: 10px 10px;
+            padding: 7px 15px;
             cursor: pointer;
         }
     
@@ -39,6 +39,8 @@
         <button type="button" class="custom-button" onclick="execCmd('bold')"><b><img src="bold-xxl.png" width="10" height="10" ></b></button>
         <button type="button" class="custom-button" onclick="execCmd('underline')"><u><img src="format_underline_white_192x192.png" width="16" height="15" ></u></button>
         <button type="button" class="custom-button" onclick="execCmd('italic')"><i><img src="italic-xxl.png" width="10" height="10" ></i></button>
+        <input type="color" class="custom-button" id="font-color">
+
     </div>
 </center>
 
@@ -53,6 +55,14 @@
         document.execCommand(command, false, value);
         saveState();
     }
+
+
+    const fontColor = document.getElementById('font-color');
+        fontColor.addEventListener('input', () => {
+            execCmd('foreColor', fontColor.value);
+        });
+
+
 
        
 
