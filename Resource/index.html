@@ -23,7 +23,7 @@
             background-color: black;
             color: white;
             border: 20px;
-            padding: 20px 15px;
+            padding: 10px 10px;
             cursor: pointer;
         }
     
@@ -36,7 +36,7 @@
     </div>
 <center>
     <div id="backgroundcolor" class="custom-button">
-        
+        <button type="button" class="custom-button" onclick="execCmd('bold')"><b><img src="bold-xxl.png" width="10" height="10" ></b></button>
 
     </div>
 </center>
@@ -46,10 +46,16 @@
     </div>
     
 <script>
+    const format = document.getElementById('editor');
+
+    function execCmd(command, value = null) {
+        document.execCommand(command, false, value);
+        saveState();
+    }
 
        
 
-    </script>
+</script>
 </body>
 <!-- Author: [Kirusnabavani] | [CT/2019/056] -->
 </html>
