@@ -37,9 +37,9 @@
     </div>
 <center>
     <div id="backgroundcolor" class="custom-button">
-        <button type="button" class="custom-button" onclick="execCmd('bold')"><b><img src="bold-xxl.png" width="10" height="10" ></b></button>
-        <button type="button" class="custom-button" onclick="execCmd('underline')"><u><img src="format_underline_white_192x192.png" width="16" height="15" ></u></button>
-        <button type="button" class="custom-button" onclick="execCmd('italic')"><i><img src="italic-xxl.png" width="10" height="10" ></i></button>
+        <button type="button" class="custom-button" onclick="cmd('bold')"><b><img src="bold-xxl.png" width="10" height="10" ></b></button>
+        <button type="button" class="custom-button" onclick="cmd('underline')"><u><img src="format_underline_white_192x192.png" width="20" height="13" ></u></button>
+        <button type="button" class="custom-button" onclick="cmd('italic')"><i><img src="italic-xxl.png" width="10" height="10" ></i></button>
         <input type="color" class="custom-button" id="font-color">
 
         <button type="button" class="custom-button" onclick="alignText('left')"><img src="left.png" width="10" height="10" ></button>
@@ -63,9 +63,9 @@
     </div>
     
 <script>
+    
     const format = document.getElementById('editor');
-
-    function execCmd(command, value = null) {
+    function cmd(command, value = null) {
         document.execCommand(command, false, value);
         saveState();
     }
@@ -73,7 +73,7 @@
 
     const fontColor = document.getElementById('font-color');
         fontColor.addEventListener('input', () => {
-            execCmd('foreColor', fontColor.value);
+            cmd('foreColor', fontColor.value);
         });
 
 
