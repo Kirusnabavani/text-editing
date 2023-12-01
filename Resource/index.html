@@ -35,7 +35,7 @@
     <div>
         <h1> Online Text Editing Application....!</h1>
     </div>
-<center>
+    <center>
     <div id="backgroundcolor" class="custom-button">
         <button type="button" class="custom-button" onclick="cmd('bold')"><b><img src="bold-xxl.png" width="10" height="10" ></b></button>
         <button type="button" class="custom-button" onclick="cmd('underline')"><u><img src="format_underline_white_192x192.png" width="20" height="13" ></u></button>
@@ -51,7 +51,7 @@
         <button type="button" class="custom-button" onclick="redo()"><img src="action-redo-32.png" width="10" height="10" ></button>
 
     </div>
-</center>
+    </center>
 
     <div id="editor" contenteditable="true">
         It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
@@ -70,23 +70,29 @@
         saveState();
     }
 
-
+        //this function for fontcolor
     const fontColor = document.getElementById('font-color');
         fontColor.addEventListener('input', () => {
             cmd('foreColor', fontColor.value);
         });
 
 
+        //this function for alignments
     function alignText(align) {
-    if (align === 'justify') {
-        document.execCommand('justifyFull', false, null);
+    const validAlignments = ['left', 'center', 'right', 'justify'];
+
+    if (validAlignments.includes(align)) {
+        const editor = document.getElementById('editor');
+
+        editor.style.textAlign = align;
+
+        saveState(); 
     } else {
-        document.execCommand('justify' + align, false, null);
-    }
-    saveState();
-    }
+        console.error('Invalid alignment value provided.');
+  }
+}
 
-
+        //this function for undo&redo
     let undoStack = [];
     let redoStack = [];
 
