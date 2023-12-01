@@ -27,41 +27,85 @@
             padding: 7px 15px;
             cursor: pointer;
         }
+
+        .color-picker-label {
+          display: inline-block;
+          position: relative;
+          vertical-align: middle;
+        }
+
+        .color-picker {
+          position: absolute;
+          opacity: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+        }
     
       </style>
     
 </head>
 <body>
-    <div>
-        <h1> Online Text Editing Application....!</h1>
-    </div>
-<center>
-    <div id="backgroundcolor" class="custom-button">
-        <button type="button" class="custom-button" onclick="cmd('bold')"><b><img src="bold-xxl.png" width="10" height="10" ></b></button>
-        <button type="button" class="custom-button" onclick="cmd('underline')"><u><img src="format_underline_white_192x192.png" width="20" height="13" ></u></button>
-        <button type="button" class="custom-button" onclick="cmd('italic')"><i><img src="italic-xxl.png" width="10" height="10" ></i></button>
-        <input type="color" class="custom-button" id="font-color">
+  <div>
+    <h1> Online Text Editing Application....!</h1>
+  </div>
+    <center>
+      <div id="backgroundcolor" class="custom-button">
+        <button type="button" class="custom-button" onclick="cmd('bold')">
+          <b><img src="bold-xxl.png" width="10" height="10" ></b>
+        </button>
 
-        <button type="button" class="custom-button" onclick="alignText('left')"><img src="left.png" width="10" height="10" ></button>
-        <button type="button" class="custom-button" onclick="alignText('center')"><img src="center.png" width="10" height="10" ></button>
-        <button type="button" class="custom-button" onclick="alignText('right')"><img src="right.png" width="10" height="10" ></button>
-        <button type="button" class="custom-button" onclick="alignText('justify')"><img src="justify.png" width="10" height="10" ></button>
+        <button type="button" class="custom-button" onclick="cmd('underline')">
+          <u><img src="format_underline_white_192x192.png" width="20" height="13" ></u>
+        </button>
 
-        <button type="button" class="custom-button" onclick="undo()"><img src="undo-4-32.png" width="10" height="10" ></button>
-        <button type="button" class="custom-button" onclick="redo()"><img src="action-redo-32.png" width="10" height="10" ></button>
+        <button type="button" class="custom-button" onclick="cmd('italic')">
+          <i><img src="italic-xxl.png" width="10" height="10" ></i>
+        </button>
 
-    </div>
-</center>
+        <label for="font-color-picker" class="color-picker-label">
+          <input type="color" class="color-picker" id="font-color-picker" onchange="changeFontColor(this.value)">
+          <img src="font-color-icon-6.jpg" width="13" height="13">
+        </label>
 
-    <div id="editor" contenteditable="true">
+        <button type="button" class="custom-button" onclick="alignText('left')">
+          <img src="left.png" width="10" height="10" >
+        </button>
+
+        <button type="button" class="custom-button" onclick="alignText('center')">
+          <img src="center.png" width="10" height="10" >
+        </button>
+
+        <button type="button" class="custom-button" onclick="alignText('right')">
+          <img src="right.png" width="10" height="10" >
+        </button>
+
+        <button type="button" class="custom-button" onclick="alignText('justify')">
+          <img src="justify.png" width="10" height="10" >
+        </button>
+
+        <button type="button" class="custom-button" onclick="undo()">
+          <img src="undo-4-32.png" width="10" height="10" >
+        </button>
+
+        <button type="button" class="custom-button" onclick="redo()">
+          <img src="action-redo-32.png" width="10" height="10" >
+        </button>
+
+      </div>
+    </center>
+
+  <div id="editor" contenteditable="true">
         It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
         The point of using Lorem Ipsum is that it has a more-of-less normal distribution of letters,as opposed to using 'Content here',
         making it look like readable English.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default 
         module text,and a search for'lorem Ipsum' will uncover many web sites still in their infancy.Various version have evolved over the 
         years,sometimes by accident,sometimes on purpose(injected humor and the like).
 
-    </div>
+  </div>
     
+
+  <!-- Internal JS -->
 <script>
     
     const format = document.getElementById('editor');
@@ -71,22 +115,28 @@
     }
 
 
-    const fontColor = document.getElementById('font-color');
-        fontColor.addEventListener('input', () => {
-            cmd('foreColor', fontColor.value);
-        });
+    function changeFontColor(selectedColor) {
+    document.execCommand('foreColor', false, selectedColor);
+    saveState(); 
+    }
 
 
+        //this function for alignments
     function alignText(align) {
-    if (align === 'justify') {
-        document.execCommand('justifyFull', false, null);
+    const validAlignments = ['left', 'center', 'right', 'justify'];
+
+    if (validAlignments.includes(align)) {
+        const editor = document.getElementById('editor');
+
+        editor.style.textAlign = align;
+
+        saveState(); 
     } else {
-        document.execCommand('justify' + align, false, null);
-    }
-    saveState();
-    }
+        console.error('Invalid alignment value provided.');
+  }
+}
 
-
+        //this function for undo&redo
     let undoStack = [];
     let redoStack = [];
 
